@@ -22,24 +22,28 @@ body {
 	/*border: 1px solid black;*/
 	list-style: none;
 }
-
-#board li {
-	width: 33.336%;
-	height:33.4%;
-	float: left;
+.row {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+}
+.box {
+	flex: 1;
+	height: 100px;
+	display: block;
 	text-align: center;
 	border: 1px solid black;
 	cursor: pointer;
 }
-#board li:hover {
+.box:hover {
 	color: #fff;
 	background: black;
 }
-#board li.disable {
+.box.disable {
 	cursor: not-allowed;
 	background: #ccc
 }
-#board li.disable:hover {
+.box.disable:hover {
 	cursor: not-allowed;
 	background: #ccc
 }
