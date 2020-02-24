@@ -29,13 +29,19 @@ class Game {
 	
     clickEvent(box) {
 		if( this.isEmpty(box) ) {
-            let pos = box.id.split('');
+            let pos = box.id.split('')
                     
-			this.state.setState(pos[0], pos[1], this.currentPlayer());
-            box.innerHTML = this.currentPlayer();
-            this.nextTurn();
+			this.state.setState(pos[0], pos[1], this.currentPlayer())
+			box.innerHTML = this.currentPlayer()
+
+			if( this.isFull() ) {
+				this.gameOver()
+			} else {
+				this.nextTurn()
+			}
             
 		}
+		
 	}
 
 	getWinner(winner) {
@@ -57,12 +63,16 @@ class Game {
 	}
 
 	isFull() {
-		
+		let isFull = true;
+		this.boxes.forEach( (box) => {
+			if( box.innerHTML == '' )  isFull = false ;
+		})
+
+		return isFull
 	}
 
 	gameOver() {
-		console.log(this.state)
-		this.state.setState( 0, 0, 'fuck')
+		console.log('Game Over Motherfucker')
 	}
 }
 
