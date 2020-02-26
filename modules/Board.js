@@ -6,7 +6,9 @@ class Board {
 
         this.state = state;
         this.boardContainer = document.querySelector(boardID);
-        this.boardContainer.innerHTML = this.createBoard();
+		this.boardContainer.innerHTML = this.createBoard();
+		this.boxes = document.querySelectorAll('.box');
+		document.querySelector('.restart').addEventListener('click', () => this.clear())
 	}
 
 	createBoard() {
@@ -21,6 +23,11 @@ class Board {
 			html += `</div>`
 		}
 		html += `</div>`
+
+		html += `		<div class="restart">Restart</div>
+		<div id="response">
+			
+		</div>`
 		return html;
     }
 
@@ -28,6 +35,8 @@ class Board {
 		this.boxes.forEach((box) => {
 			box.innerHTML = ''
 		})
+		document.querySelector('#response').innerHTML = ''
+		this.state.clearState()
 	}
 }
 

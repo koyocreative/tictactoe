@@ -6,13 +6,13 @@ class Game {
 		this.player2 = player2
 		this.state = state
 
-		this.mark = ""
+		this.mark = "X"
 		this.gg = false
 
 		this.boxes = document.querySelectorAll('.box')
         this.addListener()
 
-        this.nextTurn()
+        this.response = document.querySelector('#response')
 	
     }
     
@@ -28,30 +28,26 @@ class Game {
 	}
 	
     clickEvent(box) {
-		if( this.isEmpty(box) ) {
+		if( this.isEmpty(box) && this.gg == false) {
             let pos = box.id.split('')
                     
 			this.state.setState(pos[0], pos[1], this.currentPlayer())
+			console.log(this.state.getState())
 			box.innerHTML = this.currentPlayer()
 
-			if( this.isFull() ) {
-				this.gameOver()
-			} else {
-				this.nextTurn()
-			}
+			this.gameOver() 
             
 		}
-		
 	}
 
 	getWinner(winner) {
-		if( winner == "X" || winner == "O") {
-			return `${this.player1.name} have won the game`
-		} else if ( winner == "Draw") {
-			return `Game is Draw`
-		} else {
-			return
-		}
+		if(winner == "X") {
+			return `Player1: ${this.player1.name} have won the game`;
+		} else if( winner == "O") {
+			return `Player2: ${this.player2.name} have won the game`;
+		} else if( winner == 'Draw') {
+			return `Game is Draw!`;
+		} 
 	}
 
 	nextTurn() {
@@ -72,7 +68,30 @@ class Game {
 	}
 
 	gameOver() {
-		console.log('Game Over Motherfucker')
+
+		let curState = this.state.getState()
+		
+		if( !this.isFull() ) {
+			switch( true ) {
+				case curState[0][0] === this.mark && curState[0][1] === this.mark && curState[0][2] === this.mark :
+				case curState[1][0] === this.mark && curState[1][1] === this.mark && curState[1][2] === this.mark :
+				case curState[2][0] === this.mark && curState[2][1] === this.mark && curState[2][2] === this.mark :
+
+				case curState[0][0] === this.mark && curState[1][1] === this.mark && curState[2][2] === this.mark :
+				case curState[0][2] === this.mark && curState[1][1] === this.mark && curState[2][0] === this.mark :
+
+				case curState[0][0] === this.mark && curState[1][0] === this.mark && curState[2][0] === this.mark :
+				case curState[0][1] === this.mark && curState[1][1] === this.mark && curState[2][1] === this.mark :
+				case curState[0][2] === this.mark && curState[1][2] === this.mark && curState[2][2] === this.mark :
+					this.gg = true;
+					response.innerHTML = this.getWinner(this.mark)
+
+				default: 
+					this.nextTurn();					
+			}
+		} else {
+			return response.innerHTML = this.getWinner('Draw');
+		}
 	}
 }
 
